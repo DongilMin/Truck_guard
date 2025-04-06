@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>푸드트럭 가드 - 대시보드</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .stat-card {
+            transition: transform 0.2s;
+        }
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+        #mapContainer {
+            height: 500px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <!-- 헤더 -->
+    <header class="bg-blue-600 text-white shadow-md">
+        <div class="container mx-auto px-4 py-6 flex justify-between items-center">
+            <div class="flex items-center">
+                <i class="fas fa-truck text-2xl mr-2"></i>
+                <h1 class="text-2xl font-bold">푸드트럭 가드</h1>
+            </div>
+            <nav>
+                <ul class="flex space-x-6">
+                    <li><a href="/" class="hover:text-blue-200">홈</a></li>
+                    <li><a href="/map" class="hover:text-blue-200">지도</a></li>
+                    <li><a href="/dashboard" class="hover:text-blue-200 font-bold">대시보드</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <!-- 메인 콘텐츠 -->
+    <main class="container mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold mb-8">푸드트럭 통계 대시보드</h1>
+        
+        <!-- 통계 카드 -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <div class="bg-white rounded-lg shadow-md p-6 stat-card">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-lg font-semibold">등록된 푸드트럭</h3>
+                    <i class="fas fa-truck text-blue-500 text-2xl"></i>
+                </div>
+                <p class="text-3xl font-bold" id="totalFoodtrucks">-</p>
+                <p class="text-sm text-gray-500 mt-2">전국 공식 등록 업체</p>
+            </div>
+            
+            <div class="bg-white rounded-lg shadow-md p-6 stat-card">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-lg font-semibold">평균 평점</h3>
+                    <i class="fas fa-star text-yellow-500 text-2xl"></i>
+                </div>
+                <p class="text-3xl font-bold" id="avgRating">-</p>
+                <p class="text-sm text-gray-500 mt-2">전체 푸드트럭 평균</p>
+            </div>
+            
+            <div class="bg-white rounded-lg shadow-md p-6 stat-card">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-lg font-semibold">총 리뷰 수</h3>
+                    <i class="fas fa-comment text-green-500 text-2xl"></i>
+                </div>
+                <p class="text-3xl font-bold" id="totalReviews">-</p>
+                <p class="text-sm text-gray-500 mt-2">사용자 리뷰</p>
+            </div>
+            
+            <div class="bg-white rounded-lg shadow-md p-6 stat-card">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-lg font-semibold">지역별 현황</h3>
+                    <i class="fas fa-map-marked-alt text-purple-500 text-2xl"></i>
+                </div>
+                <p class="text-3xl font-bold" id="regionCount">-</p>
+                <p class="text-sm text-gray-500 mt-2">전국 지역 분포</p>
+            </div>
+        </div>
+        
+        <!-- 지도 섹션 -->
+        <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-bold">푸드트럭 분포 현황</h2>
+                <button id="findMe" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md flex items-center">
+                    <i class="fas fa-location-arrow mr-2"></i> 내 위치 찾기
+                </button>
+            </div>
+            <div id="mapContainer" class="rounded-lg overflow-hidden"></div>
+        </div>
+        
+        <!-- 랭킹 섹션 -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+            <!-- 인기 푸드트럭 -->
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h2 class="text-xl font-bold mb-4">인기 푸드트럭 TOP 5</h2>
+                <div id="topFoodtrucks">
+                    <div class="text-center py-10 text-gray-500">
+                        <p>데이터를 불러오는 중...</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 지역별 분포 -->
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h2 class="text-xl font-bold mb-4">지역별 푸드트럭 분포</h2>
+                <div id="regionDistribution">
+                    <div class="text-center py-10 text-gray-500">
+                        <p>데이터를 불러오는 중...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <!-- 푸터 -->
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between">
+                <div class="mb-6 md:mb-0">
+                    <h3 class="text-xl font-bold mb-2">푸드트럭 가드</h3>
+                    <p class="text-gray-400">푸드트럭 정보 제공 서비스</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-2">문의</h4>
+                    <p class="text-gray-400">support@foodtruckguard.com</p>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-6 pt-6 text-center text-gray-400">
+                <p>&copy; 2025 푸드트럭 가드. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.3.4/axios.min.js"></script>
+    <script src="/static/js/map.js"></script>
+    <script>
+        // 대시보드 통계 데이터를 가져오는 함수
+        async function loadDashboardStats() {
+            try {
+                const response = await axios.get('http://localhost:8000/foodtrucks/');
+                const foodtrucks = response.data;
+                
+                // 푸드트럭 총 개수
+                document.getElementById('totalFoodtrucks').textContent = foodtrucks.length;
+                
+                // 평균 평점 계산
+                const totalRating = foodtrucks.reduce((sum, truck) => sum + (truck.avg_rating || 0), 0);
+                const avgRating = (totalRating / foodtrucks.length).toFixed(1);
+                document.getElementById('avgRating').textContent = avgRating;
+                
+                // 총 리뷰 수
+                const totalReviews = foodtrucks.reduce((sum, truck) => sum + (truck.review_count || 0), 0);
+                document.getElementById('totalReviews').textContent = totalReviews;
+                
+                // 지역별 분포
+                const regions = new Set();
+                foodtrucks.forEach(truck => {
+                    if (truck.address) {
+                        const region = truck.address.split(' ')[0];
+                        regions.add(region);
+                    }
+                });
+                document.getElementById('regionCount').textContent = regions.size;
+                
+                // 인기 푸드트럭 표시
+                displayTopFoodtrucks(foodtrucks);
+                
+                // 지역별 분포 표시
+                displayRegionDistribution(foodtrucks);
+                
+            } catch (error) {
+                console.error('대시보드 데이터를 가져오는데 실패했습니다:', error);
+            }
+        }
+        
+        // 인기 푸드트럭 표시
+        function displayTopFoodtrucks(foodtrucks) {
+            const sortedTrucks = [...foodtrucks]
+                .sort((a, b) => (b.avg_rating || 0) - (a.avg_rating || 0))
+                .slice(0, 5);
+                
+            const container = document.getElementById('topFoodtrucks');
+            container.innerHTML = '';
+            
+            sortedTrucks.forEach((truck, index) => {
+                const item = document.createElement('div');
+                item.className = 'flex items-center justify-between py-3 border-b border-gray-200';
+                item.innerHTML = `
+                    <div class="flex items-center">
+                        <span class="text-lg font-bold mr-3">${index + 1}</span>
+                        <div>
+                            <h4 class="font-medium">${truck.business_name}</h4>
+                            <p class="text-sm text-gray-500">${truck.address}</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center text-yellow-500">
+                        <span class="font-bold mr-1">${truck.avg_rating ? truck.avg_rating.toFixed(1) : 'N/A'}</span>
+                        <i class="fas fa-star"></i>
+                    </div>
+                `;
+                container.appendChild(item);
+            });
+        }
+        
+        // 지역별 분포 표시
+        function displayRegionDistribution(foodtrucks) {
+            const regions = {};
+            
+            foodtrucks.forEach(truck => {
+                if (truck.address) {
+                    const region = truck.address.split(' ')[0];
+                    regions[region] = (regions[region] || 0) + 1;
+                }
+            });
+            
+            // 객체를 배열로 변환하고 개수 기준으로 정렬
+            const sortedRegions = Object.entries(regions)
+                .sort((a, b) => b[1] - a[1])
+                .slice(0, 8); // 상위 8개 지역만 표시
+                
+            const container = document.getElementById('regionDistribution');
+            container.innerHTML = '';
+            
+            sortedRegions.forEach(([region, count]) => {
+                const percentage = Math.round((count / foodtrucks.length) * 100);
+                
+                const item = document.createElement('div');
+                item.className = 'mb-3';
+                item.innerHTML = `
+                    <div class="flex justify-between text-sm mb-1">
+                        <span>${region}</span>
+                        <span>${count}개 (${percentage}%)</span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-2">
+                        <div class="bg-blue-500 h-2 rounded-full" style="width: ${percentage}%"></div>
+                    </div>
+                `;
+                container.appendChild(item);
+            });
+        }
+        
+        // 페이지 로드 시 실행
+        window.addEventListener('load', loadDashboardStats);
+    </script>
+</body>
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>푸드트럭 가드 - 푸드트럭 찾기</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .truck-card {
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .truck-card:hover {
+            transform: translateY(-5px);
+        }
+        .rating {
+            color: #f59e0b;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <!-- 헤더 -->
+    <header class="bg-blue-600 text-white shadow-md">
+        <div class="container mx-auto px-4 py-6 flex justify-between items-center">
+            <div class="flex items-center">
+                <i class="fas fa-truck text-2xl mr-2"></i>
+                <h1 class="text-2xl font-bold">푸드트럭 가드</h1>
+            </div>
+            <nav>
+                <ul class="flex space-x-6">
+                    <li><a href="/" class="hover:text-blue-200">홈</a></li>
+                    <li><a href="/map" class="hover:text-blue-200">지도</a></li>
+                    <li><a href="/dashboard" class="hover:text-blue-200">대시보드</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <!-- 메인 콘텐츠 -->
+    <main class="container mx-auto px-4 py-8">
+        <!-- 검색 섹션 -->
+        <section class="mb-8">
+            <div class="max-w-2xl mx-auto">
+                <div class="flex shadow-md rounded-lg overflow-hidden">
+                    <input 
+                        id="search" 
+                        type="text" 
+                        class="w-full py-3 px-4 focus:outline-none" 
+                        placeholder="푸드트럭 이름 또는 주소 검색...">
+                    <button class="bg-blue-500 hover:bg-blue-600 text-white px-6 flex items-center">
+                        <i class="fas fa-search mr-2"></i> 검색
+                    </button>
+                </div>
+            </div>
+        </section>
+        
+        <!-- 푸드트럭 목록 섹션 -->
+        <section id="trucks" class="mb-10">
+            <h2 class="text-2xl font-bold mb-6">푸드트럭 목록</h2>
+            <div id="trucksList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- JavaScript로 동적 생성되는 부분 -->
+            </div>
+            
+            <!-- 더보기 버튼 -->
+            <div class="text-center mt-8">
+                <button class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-full">
+                    더 보기
+                </button>
+            </div>
+        </section>
+        
+        <!-- 소개 섹션 -->
+        <section class="bg-white rounded-lg shadow-md p-6 mb-10">
+            <h2 class="text-2xl font-bold mb-4">푸드트럭 가드란?</h2>
+            <p class="text-gray-700 mb-4">
+                푸드트럭 가드는 전국의 공식 등록된 푸드트럭 정보를 한눈에 볼 수 있는 서비스입니다. 
+                내 주변 푸드트럭을 찾고, 리뷰를 확인하며, 맛있는 음식을 즐겨보세요!
+            </p>
+            <div class="flex flex-wrap gap-4 mt-6">
+                <div class="flex items-center">
+                    <i class="fas fa-map-marker-alt text-blue-500 text-xl mr-2"></i>
+                    <span>위치 기반 검색</span>
+                </div>
+                <div class="flex items-center">
+                    <i class="fas fa-star text-yellow-500 text-xl mr-2"></i>
+                    <span>리뷰 시스템</span>
+                </div>
+                <div class="flex items-center">
+                    <i class="fas fa-info-circle text-green-500 text-xl mr-2"></i>
+                    <span>상세 정보 제공</span>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- 푸터 -->
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between">
+                <div class="mb-6 md:mb-0">
+                    <h3 class="text-xl font-bold mb-2">푸드트럭 가드</h3>
+                    <p class="text-gray-400">푸드트럭 정보 제공 서비스</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-2">문의</h4>
+                    <p class="text-gray-400">support@foodtruckguard.com</p>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-6 pt-6 text-center text-gray-400">
+                <p>&copy; 2025 푸드트럭 가드. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.3.4/axios.min.js"></script>
+    <script src="/static/js/foodtruck.js"></script>
+</body>
+</html>
