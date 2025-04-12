@@ -1,21 +1,15 @@
-# Node.js 관련 (프론트엔드 및 백엔드 공통)
-**/node_modules
-**/package-lock.json
-**/yarn.lock
+
 
 # 환경 변수 파일
-frontend/.env
-backend/.env
+public/.env
+src/.env
 data_collector/.env
 
 # Python 가상환경 및 캐시 파일
-data_collector/venv/
+src/data_collector/.env
+src/data_collector/venv/
 **/__pycache__/
 **/*.py[cod]
-
-# 로그 파일
-logs/
-*.log
 
 # 데이터베이스 설정 파일 (보안)
 **/database/*.json
